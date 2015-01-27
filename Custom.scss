@@ -1326,4 +1326,8 @@ body /deep/ {
     }
   }
 }
-
+body /deep/{
+  .webkit-html-tag {
+    color: $text-white;
+  }
+}
