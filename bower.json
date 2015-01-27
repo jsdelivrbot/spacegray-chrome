@@ -1,0 +1,26 @@
+{
+  "name": "spacegray-chrome",
+  "version": "1.0.0",
+  "homepage": "https://github.com/sevenfoxes/spacegray-chrome",
+  "authors": [
+    "Scott Nesham <sanesham@gmail.com>"
+  ],
+  "description": "Spacegray for Chrome",
+  "main": "spacegray.scss",
+  "keywords": [
+    "spacegray",
+    "chrome",
+    "devtools"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bourbon": "~4.1.1"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+	"name": "Spacegray devtools theme",
+	"short_name": "spacegray",
+	"version": "1.0.0",
+	"devtools_page": "devtools.html",
+    "author": "Scott Nesham",
+    "icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+    }
+}
