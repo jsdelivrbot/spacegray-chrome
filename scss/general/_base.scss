@@ -1,25 +1,13 @@
-@import 'bower_components/bourbon/app/assets/stylesheets/bourbon';
-
-$text-white:  #BFC5CC;
-$text-gray:   #65737F;
-$gray:        #2B303B;
-$gray-medium: #232830;
-$gray-dark:   #1C1F26;
-
-$orange:      #D08770;
-$red:         #BF616A;
-$seafoam:     #96B5B4;
-$aqua:        #70A8B8;
-$green:       #A4CC8D;
-$yellow:      #F4D988;
-$purple:      #B98EB1;
-
-.sidebar-pane{
-  background: $gray-medium !important;
-  color: $text-white !important;
+li {
+  margin-left: -13px;
+  margin-bottom: 3px;
+  line-height: 1.3em;
 }
 
-body /deep/{
+@include deep {
+  .platform-mac .monospace{
+    font-family: 'Fira Mono', Menlo, monospace !important;
+  }
   .vbox {
     display: flex;
     flex-direction: column !important;
@@ -73,19 +61,3 @@ body /deep/{
     color: $text-white;
   }
 }
-
-.styles-section{
-  .simple-selector{
-    &.selector-matches{
-      color: $orange !important;
-    }
-  }
-}
-
-li {
-  margin-left: -13px;
-  margin-bottom: 3px;
-  line-height: 1.3em;
-}
-
-

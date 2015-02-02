@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'icomoon';
+  src:url('fonts/icomoon.eot');
+  src:url('fonts/icomoon.eot?#iefix25lq2c') format('embedded-opentype'),
+    url('fonts/icomoon.woff?25lq2c') format('woff'),
+    url('fonts/icomoon.ttf?25lq2c') format('truetype'),
+    url('fonts/icomoon.svg?25lq2c#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-console::before {
+  content: "\e600";
+}
+
+.icon-input::before {
+  content: "\e601";
+}
+
+.icon-launch::before {
+  content: "\e602";
+}
+
+.icon-search::before {
+  content: "\e603";
+}
+
+.icon-settings::before {
+  content: "\e604";
+}
+
+.icon-repeat::before {
+  content: "\e605";
+}
+
+.icon-add::before {
+  content: "\e606";
+}
+
+.icon-block::before {
+  content: "\e607";
+}
+
+.icon-filter-list::before {
+  content: "\e608";
+}
+
+.icon-remove::before {
+  content: "\e609";
+}
+
+.icon-gps-not-fixed::before {
+  content: "\e60a";
+}
+
+.icon-keyboard-arrow-down::before {
+  content: "\e60b";
+}
+
+.icon-keyboard-arrow-left::before {
+  content: "\e60c";
+}
+
+.icon-keyboard-arrow-right::before {
+  content: "\e60d";
+}
+
+.icon-keyboard-arrow-up::before {
+  content: "\e60e";
+}
+
+.icon-phone-iphone::before {
+  content: "\e60f";
+}
+
+.icon-center-focus-strong::before {
+  content: "\e610";
+}
+
+.icon-center-focus-weak::before {
+  content: "\e611";
+}
+
+.icon-cancel::before {
+  content: "\e612";
+}

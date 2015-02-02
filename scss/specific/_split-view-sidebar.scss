@@ -1,0 +1,103 @@
+.sidebar-pane {
+  background: $gray-medium !important;
+  color: $text-white !important;
+  text-rendering: optimizeLegibility;
+}
+
+.sidebar-tabbed-pane{
+  .tabbed-pane-header{
+    border-bottom: 2px solid $gray;
+    background: $gray-medium;
+    padding-bottom: 2px;
+    flex: 0 0 28px;
+
+    &-tab{
+      border: none;
+      color: $text-gray !important;
+
+      &.selected {
+        background: transparent;
+
+        span{
+          color: $text-white !important;
+        }
+      }
+    }
+  }
+}
+
+.styles-section {
+  padding-left: 8px !important;
+  border-bottom: 2px solid $gray !important;
+
+  .selector {
+    color: $text-gray !important;
+  }
+
+  .simple-selector {
+    &.selector-matches {
+      color: $orange !important;
+    }
+  }
+
+  &.read-only:not(.computed-style){
+    background-color: $gray-medium !important;
+  }
+  .header{
+    .title{
+      .media-list{
+        margin-bottom: 5px;
+        .media{
+          a{
+            color: $seafoam !important;
+          }
+        }
+      }
+      .media, .subtitle{
+        color: $seafoam !important;
+        a{
+          color: $green !important;
+        }
+      }
+    }
+  }
+}
+
+.split-view.hbox > .split-view-resizer > .split-view-resizer-border{
+  border-left: none;
+}
+
+.styles-pane {
+  .sidebar-separator{
+    background: $gray-dark;
+    border: none;
+    padding: 5px;
+    color: $aqua;
+    margin-bottom: 5px;
+  }
+}
+.sidebar-pane-filter-box{
+  border-top: 1px solid $gray-dark !important;
+  background: $gray-dark;
+  flex-basis: 27px !important;
+
+  input{
+    color: $text-white;
+  }
+}
+
+@include deep{
+  .cm-css-property,
+  .webkit-css-property{
+    color: $text-white;
+  }
+  .value{
+    color: $orange;
+  }
+}
+
+.metrics{
+  .label{
+    color: #fff !important;
+  }
+}

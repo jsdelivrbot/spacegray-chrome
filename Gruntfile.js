@@ -13,14 +13,14 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          'Custom.css': 'Custom.scss'
+          'dist/Custom.css': 'scss/Custom.scss'
         }
       }
     },
 
     open : {
       dev : {
-        path: 'http://reload.extensions'
+        path: 'http://localhost:9000'
       }
     },
 
@@ -44,12 +44,12 @@ module.exports = function(grunt) {
 
     watch: {
       sass: {
-        files: ['*.scss'],
-        tasks: ['sass','open'],
+        files: ['**/*.scss', '**/*.html'],
+        tasks: ['sass'],
         options: { livereload: LIVERELOAD_PORT }
       }
     }
   });
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['connect', 'open', 'watch']);
 };

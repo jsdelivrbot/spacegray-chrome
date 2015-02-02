@@ -1,0 +1,875 @@
+<head>
+  <link rel="stylesheet" href="devtools.css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="dist/Custom.css" media="screen" charset="utf-8">
+</head>
+<body class="undocked component-root platform-mac inactive" id="-blink-dev-tools">
+
+<div class="view vbox component-root platform-mac root-view visible" spellcheck="false" style="margin-right: 0px; margin-bottom: 0px;"><div class="view split-view vbox visible"><div class="split-view-resizer hidden"><div class="split-view-resizer-border"></div></div><div class="split-view-contents split-view-sidebar vbox visible split-view-contents-second maximized"><div class="view vbox visible"><div class="view split-view vbox visible"><div class="split-view-resizer" style="bottom: 126px; margin-bottom: -3px;"><div class="split-view-resizer-border"></div></div><div class="split-view-contents split-view-main vbox visible split-view-contents-first" style=""><div class="view vbox tabbed-pane visible" tabindex="-1"><div class="toolbar toolbar-background toolbar-colors"><div class="toolbar-controls-left"><button class="node-search-status-bar-item status-bar-item" title="Select an element in the page to inspect it."><div class="glyph"></div></button><button class="emulation-status-bar-item status-bar-item" title="Toggle device mode."><div class="glyph"></div></button></div><div class="tabbed-pane-header"><div class="tabbed-pane-header-contents"><div class="tabbed-pane-header-tabs"><div class="tabbed-pane-header-tab selected" id="tab-elements" tabindex="-1" style="width: 63.609375px;"><span class="tabbed-pane-header-tab-title" title="">Elements</span></div><div class="tabbed-pane-header-tab" id="tab-network" tabindex="-1" style="width: 59.59375px;"><span class="tabbed-pane-header-tab-title" title="">Network</span></div><div class="tabbed-pane-header-tab" id="tab-sources" tabindex="-1" style="width: 56.140625px;"><span class="tabbed-pane-header-tab-title" title="">Sources</span></div><div class="tabbed-pane-header-tab" id="tab-timeline" tabindex="-1" style="width: 61.015625px;"><span class="tabbed-pane-header-tab-title" title="">Timeline</span></div><div class="tabbed-pane-header-tab" id="tab-profiles" tabindex="-1" style="width: 54.078125px;"><span class="tabbed-pane-header-tab-title" title="">Profiles</span></div><div class="tabbed-pane-header-tab" id="tab-resources" tabindex="-1" style="width: 70.078125px;"><span class="tabbed-pane-header-tab-title" title="">Resources</span></div><div class="tabbed-pane-header-tab" id="tab-audits" tabindex="-1" style="width: 48.359375px;"><span class="tabbed-pane-header-tab-title" title="">Audits</span></div><div class="tabbed-pane-header-tab" id="tab-console" tabindex="-1" style="width: 57.765625px;"><span class="tabbed-pane-header-tab-title" title="">Console</span></div><div class="tabbed-pane-header-tab" id="tab-extension-panel-1_1" tabindex="-1" style="width: 43.96875px;"><span class="tabbed-pane-header-tab-title" title="">Grunt</span></div><div class="tabbed-pane-header-tab" id="tab-extension-panel-2_1" tabindex="-1" style="width: 97.859375px;"><span class="tabbed-pane-header-tab-title" title="">EditThisCookie</span></div></div></div></div><div class="toolbar-controls-right"><div class="status-bar-item status-bar-counter" title="15 errors"><span class="status-bar-counter-item status-bar-counter-item-first"><div class="error-icon-small"></div><span>15</span></span><span class="status-bar-counter-item hidden"><div class="warning-icon-small"></div><span></span></span></div><button class="console-status-bar-item status-bar-item toggled-on" title="Hide drawer."><div class="glyph"></div></button><button class="settings-status-bar-item status-bar-item" title="Settings"><div class="glyph"></div></button><button class="dock-status-bar-item status-bar-item toggled-bottom" title="Dock to main window."><div class="glyph"></div><div class="fill long-click-glyph"></div><div class="fill long-click-glyph shadow"></div></button><div class="toolbar-close-button-item"><div class="close-button"></div></div></div></div><div class="tabbed-pane-content"><div class="view vbox panel elements visible"><style type="text/css">/*
+ * Copyright (C) 2006, 2007, 2008 Apple Inc.  All rights reserved.
+ * Copyright (C) 2009 Anthony Ricaud <rik@webkit.org>
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1.  Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ * 2.  Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
+ *     its contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#elements-content {
+    flex: 1 1;
+    overflow: auto;
+    padding: 2px 0 0 0;
+    transform: translateZ(0);
+}
+
+#elements-content:not(.elements-wrap) > div {
+    display: inline-block;
+    min-width: 100%;
+}
+
+#elements-content.elements-wrap {
+    overflow-x: hidden;
+}
+
+#elements-crumbs {
+    flex: 0 0 19px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    overflow: hidden;
+    height: 19px;
+    width: 100%;
+}
+
+.metrics {
+    padding: 8px;
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.metrics .label {
+    position: absolute;
+    font-size: 10px;
+    margin-left: 3px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.metrics .position {
+    border: 1px rgb(66%, 66%, 66%) dotted;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    padding: 3px;
+    margin: 3px;
+}
+
+.metrics .margin {
+    border: 1px dashed;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+    margin: 3px;
+}
+
+.metrics .border {
+    border: 1px black solid;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+    margin: 3px;
+}
+
+.metrics .padding {
+    border: 1px grey dashed;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+    margin: 3px;
+}
+
+.metrics .content {
+    position: static;
+    border: 1px gray solid;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 3px;
+    margin: 3px;
+    min-width: 80px;
+    overflow: visible;
+}
+
+.metrics .content span {
+    display: inline-block;
+}
+
+.metrics .editing {
+    position: relative;
+    z-index: 100;
+    cursor: text;
+}
+
+.metrics .left {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.metrics .right {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.metrics .top {
+    display: inline-block;
+}
+
+.metrics .bottom {
+    display: inline-block;
+}
+
+.styles-section {
+    padding: 2px 2px 4px 4px;
+    min-height: 18px;
+    white-space: nowrap;
+    background-origin: padding;
+    background-clip: padding;
+    -webkit-user-select: text;
+    border-bottom: 1px solid rgb(191, 191, 191);
+    position: relative;
+}
+
+.styles-pane .sidebar-separator {
+    border-top: 0px none;
+}
+
+.styles-section.user-rule {
+    display: none;
+}
+
+.show-user-styles .styles-section.user-rule {
+    display: block;
+}
+
+.styles-sidebar-placeholder {
+    height: 16px;
+}
+
+.styles-section.read-only:not(.computed-style) {
+    background-color: #eee;
+}
+
+.styles-section .properties li.not-parsed-ok {
+    margin-left: 0;
+}
+
+.styles-section.computed-style .properties li.not-parsed-ok {
+    margin-left: -6px;
+}
+
+.styles-section .properties li.filter-match,
+.styles-section .simple-selector.filter-match {
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
+.styles-section .properties li.overloaded.filter-match {
+    background-color: rgba(255, 255, 0, 0.25);
+}
+
+.styles-section .properties li.not-parsed-ok .exclamation-mark {
+    display: inline-block;
+    position: relative;
+    width: 11px;
+    height: 10px;
+    margin: 0 7px 0 0;
+    top: 1px;
+    left: -36px; /* outdent to compensate for the top-level property indent */
+    -webkit-user-select: none;
+    cursor: default;
+    z-index: 1;
+}
+
+.styles-section .header {
+    white-space: nowrap;
+    background-origin: padding;
+    background-clip: padding;
+}
+
+.styles-section .header .title {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.styles-section .header .title .media,
+.styles-section .header .title .media .subtitle {
+    color: rgb(128, 128, 128);
+    overflow: hidden;
+}
+
+.styles-section .header .subtitle {
+    color: rgb(85, 85, 85);
+    float: right;
+    margin-left: 5px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.styles-section .header .subtitle a {
+    color: inherit;
+}
+
+.styles-section .selector {
+    color: #888;
+}
+
+.styles-section .simple-selector.selector-matches {
+    color: #222;
+}
+
+.styles-section a[data-uncopyable] {
+    display: inline-block;
+}
+
+.styles-section a[data-uncopyable]::before {
+    content: attr(data-uncopyable);
+    text-decoration: underline;
+}
+
+.styles-section .properties {
+    display: none;
+    margin: 0;
+    padding: 2px 4px 0 0;
+    list-style: none;
+    clear: both;
+}
+
+.styles-section.matched-styles .properties {
+    padding-left: 0;
+}
+
+.styles-section.no-affect .properties li {
+    opacity: 0.5;
+}
+
+.styles-section.no-affect .properties li.editing {
+    opacity: 1.0;
+}
+
+.styles-section.expanded .properties {
+    display: block;
+}
+
+.styles-section .properties li {
+    margin-left: 12px;
+    padding-left: 22px;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: auto;
+}
+
+.styles-section.computed-style.expanded .properties > li {
+    padding-left: 0;
+}
+
+.styles-section.computed-style.expanded .properties > li .webkit-css-property {
+    margin-left: 0;
+}
+
+.styles-section .properties li .webkit-css-property {
+    margin-left: -22px; /* outdent the first line of longhand properties (in an expanded shorthand) to compensate for the "padding-left" shift in .styles-section .properties li */
+}
+
+.styles-section.expanded .properties > li {
+    padding-left: 38px;
+}
+
+.styles-section .properties > li .webkit-css-property {
+    margin-left: -38px; /* outdent the first line of the top-level properties to compensate for the "padding-left" shift in .styles-section .properties > li */
+}
+
+.styles-section .properties > li.child-editing {
+    padding-left: 8px;
+}
+
+.styles-section .properties > li.child-editing .webkit-css-property {
+    margin-left: 0;
+}
+
+.styles-section.matched-styles .properties li {
+    margin-left: 0 !important;
+}
+
+.styles-section .properties li.child-editing {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    padding-left: 0;
+}
+
+.styles-section .properties ol {
+    display: none;
+    margin: 0;
+    -webkit-padding-start: 12px;
+    list-style: none;
+}
+
+.styles-section .properties ol.expanded {
+    display: block;
+}
+
+.styles-section.matched-styles .properties li.parent .expand-element {
+    -webkit-user-select: none;
+    background-image: url(Images/statusbarButtonGlyphs.png);
+    background-size: 320px 144px;
+    margin-right: 2px;
+    margin-left: -6px;
+    opacity: 0.55;
+    width: 8px;
+    height: 10px;
+    display: inline-block;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+.styles-section.matched-styles .properties li.parent .expand-element {
+    background-image: url(Images/statusbarButtonGlyphs_2x.png);
+}
+} /* media */
+
+.styles-section.matched-styles .properties li.parent .expand-element {
+    background-position: -4px -96px;
+}
+
+.styles-section.matched-styles .properties li.parent.expanded .expand-element {
+    background-position: -20px -96px;
+}
+
+.styles-section .properties li .info {
+    padding-top: 4px;
+    padding-bottom: 3px;
+}
+
+.styles-section.matched-styles:not(.read-only):hover .properties .enabled-button {
+    visibility: visible;
+}
+
+.styles-section.matched-styles:not(.read-only) .properties li.disabled .enabled-button {
+    visibility: visible;
+}
+
+.styles-section .properties .enabled-button {
+    visibility: hidden;
+    float: left;
+    font-size: 10px;
+    margin: 0;
+    vertical-align: top;
+    position: relative;
+    z-index: 1;
+    width: 18px;
+    left: -40px; /* original -2px + (-38px) to compensate for the first line outdent */
+    top: 1px;
+}
+
+.styles-section.matched-styles .properties ol.expanded {
+    margin-left: 16px;
+}
+
+.styles-section .properties .overloaded:not(.has-ignorable-error),
+.styles-section .properties .inactive,
+.styles-section .properties .disabled,
+.styles-section .properties .not-parsed-ok:not(.has-ignorable-error) {
+    text-decoration: line-through;
+}
+
+.styles-section .properties .has-ignorable-error .webkit-css-property {
+    color: inherit;
+}
+
+.styles-section.computed-style .properties .disabled {
+    text-decoration: none;
+    opacity: 0.5;
+}
+
+.styles-section .properties .implicit,
+.styles-section .properties .inherited {
+    opacity: 0.5;
+}
+
+.styles-section .properties .has-ignorable-error {
+    color: gray;
+}
+
+.styles-element-state-pane {
+    overflow: hidden;
+    margin-top: -56px;
+    padding-top: 18px;
+    height: 56px;
+    -webkit-transition: margin-top 0.1s ease-in-out;
+    padding-left: 2px;
+}
+
+.styles-element-state-pane.expanded {
+    border-bottom: 1px solid rgb(189, 189, 189);
+    margin-top: 0;
+}
+
+.styles-element-state-pane > table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.styles-element-state-pane label {
+    display: flex;
+    margin: 1px;
+}
+
+.styles-selector {
+    cursor: text;
+}
+
+.section .event-bars {
+    display: none;
+}
+
+.section.expanded .event-bars {
+    display: block;
+}
+
+.event-bar {
+    position: relative;
+    margin-left: 10px;
+}
+
+.event-bar:first-child {
+    margin-top: 1px;
+}
+
+.event-bars .event-bar .header {
+    padding: 0 8px 0 6px;
+    min-height: 16px;
+    opacity: 1.0;
+    white-space: nowrap;
+    background-origin: padding;
+    background-clip: padding;
+}
+
+.event-bars .event-bar .header .title {
+    font-weight: normal;
+    text-shadow: white 0 1px 0;
+}
+
+.event-bars .event-bar .header .subtitle {
+    color: rgba(90, 90, 90, 0.75);
+}
+
+.event-bars .event-bar .header::before {
+    -webkit-user-select: none;
+    background-image: url(Images/statusbarButtonGlyphs.png);
+    background-size: 320px 144px;
+    opacity: 0.5;
+    content: "a";
+    color: transparent;
+    text-shadow: none;
+    float: left;
+    width: 8px;
+    margin-right: 4px;
+    margin-top: 2px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+.event-bars .event-bar .header::before {
+    background-image: url(Images/statusbarButtonGlyphs_2x.png);
+}
+} /* media */
+
+.event-bars .event-bar .header::before {
+    background-position: -4px -96px;
+}
+
+.event-bars .event-bar.expanded .header::before {
+    background-position: -20px -96px;
+}
+
+.image-preview-container {
+    background: transparent;
+    text-align: center;
+}
+
+.image-preview-container img {
+    margin: 2px auto;
+    max-width: 100px;
+    max-height: 100px;
+    background-image: url(Images/checker.png);
+    -webkit-user-select: text;
+    -webkit-user-drag: auto;
+}
+
+.sidebar-pane.composite {
+    position: absolute;
+}
+
+.sidebar-pane.composite > .body {
+    height: 100%;
+}
+
+.sidebar-pane.composite .metrics {
+    border-bottom: 1px solid rgb(64%, 64%, 64%);
+    height: 206px;
+    display: flex;
+    flex-direction: column;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+}
+
+.sidebar-pane .metrics-and-styles,
+.sidebar-pane .metrics-and-computed {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative;
+}
+
+.sidebar-pane .style-panes-wrapper {
+    transform: translateZ(0);
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+}
+
+.sidebar-pane.composite .metrics-and-computed .sidebar-pane-toolbar,
+.sidebar-pane.composite .metrics-and-styles .sidebar-pane-toolbar {
+    position: absolute;
+}
+
+.sidebar-pane-filter-box {
+    display: flex;
+    border-top: 1px solid rgb(191, 191, 191);
+    flex-basis: 19px;
+}
+
+.sidebar-pane-filter-box > input {
+    outline: none !important;
+    border: none;
+    width: 100%;
+    margin: 0 4px;
+    background: transparent;
+}
+
+.styles-filter-engaged {
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
+.sidebar-pane.composite .metrics-and-computed .sidebar-pane-toolbar {
+    margin-top: 4px;
+    margin-bottom: -4px;
+    position: relative;
+}
+
+.sidebar-pane.composite .platform-fonts .body {
+    padding: 1ex;
+    -webkit-user-select: text;
+}
+
+.sidebar-pane.composite .platform-fonts .sidebar-separator {
+    border-top: none;
+}
+
+.sidebar-pane.composite .platform-fonts .stats-section {
+    margin-bottom: 5px;
+}
+
+.sidebar-pane.composite .platform-fonts .font-stats-item {
+    padding-left: 1em;
+}
+
+.sidebar-pane.composite .platform-fonts .font-stats-item .delimeter {
+    margin: 0 1ex 0 1ex;
+}
+
+.sidebar-pane.composite .metrics-and-styles .metrics {
+    border-bottom: none;
+}
+
+.sidebar-pane > .body > .split-view {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.panel.elements .sidebar-pane-toolbar > select {
+    float: right;
+    width: 23px;
+    height: 17px;
+    color: transparent;
+    background-color: transparent;
+    border: none;
+    background-repeat: no-repeat;
+    margin: 1px 0 0 0;
+    padding: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+}
+
+.panel.elements .sidebar-pane-toolbar > select:hover {
+    background-position: -23px 0;
+}
+
+.panel.elements .sidebar-pane-toolbar > select:active {
+    background-position: -46px 0;
+}
+
+.panel.elements .sidebar-pane-toolbar > select.select-filter {
+    background-image: url(Images/paneFilterButtons.png);
+}
+.panel.elements .sidebar-pane-toolbar > select > option,
+.panel.elements .sidebar-pane-toolbar > select > hr {
+    color: black;
+}
+
+.styles-section:not(.read-only) .properties .webkit-css-property.styles-panel-hovered,
+.styles-section:not(.read-only) .properties .value .styles-panel-hovered,
+.styles-section:not(.read-only) .properties .value.styles-panel-hovered,
+.styles-section:not(.read-only) span.simple-selector.styles-panel-hovered {
+    text-decoration: underline;
+    cursor: default;
+}
+
+.styles-clipboard-only {
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+li.child-editing .styles-clipboard-only {
+    display: none;
+}
+
+.sidebar-separator {
+    background-color: #ddd;
+    padding: 0 5px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    color: rgb(50, 50, 50);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 16px;
+}
+
+.animation-pause .glyph {
+    -webkit-mask-position: -32px -72px;
+}
+
+.animation-pause.toggled-on .glyph {
+    -webkit-mask-position: 0 -72px;
+}
+
+.swatch-inner {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    border: 1px solid rgba(128, 128, 128, 0.6);
+}
+
+.swatch-inner:hover {
+    border: 1px solid rgba(64, 64, 64, 0.8);
+}
+
+/*# sourceURL=elements/elementsPanel.css */</style><div class="view split-view hbox visible"><div class="split-view-resizer ew-resizer-widget" style="right: 393px; margin-right: -3px;"><div class="split-view-resizer-border"></div></div><div class="split-view-contents split-view-main vbox visible split-view-contents-first"><div class="view vbox visible"><div class="search-bar status-bar hidden" style="order: 100;"><table class="toolbar-search" cellspacing="0"><tr><td><span class="toolbar-search-control"><input class="search-replace" id="search-input-field" placeholder="Find"><label class="search-results-matches" for="search-input-field"></label><div class="toolbar-search-navigation-controls"><div class="toolbar-search-navigation toolbar-search-navigation-prev" title="Search Previous"></div><div class="toolbar-search-navigation toolbar-search-navigation-next" title="Search Next"></div></div></span></td><td><button class="search-action-button hidden" tabindex="-1">Find</button></td><td><button class="search-action-button hidden" tabindex="-1">Previous</button></td><td><span><input type="checkbox" id="search-replace-trigger2"><label for="search-replace-trigger2">Replace</label></span></td><td><button class="search-action-button" tabindex="-1">Cancel</button></td></tr><tr class="hidden"><td><input class="search-replace toolbar-replace-control" placeholder="Replace"></td><td><button class="search-action-button" disabled="" tabindex="-1">Replace</button></td><td><button class="search-action-button">Replace All</button></td></tr></table></div><div id="elements-content" class="elements-wrap"><div><div class="outline-disclosure component-root platform-mac"><ol class="elements-tree-outline source-code" tabindex="0"><li title="" draggable="true"><span class="highlight"><span class="webkit-html-doctype">&lt;!DOCTYPE html&gt;</span></span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">html</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">lang</span>=&#8203;"<span class="webkit-html-attribute-value">en</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span><span class="webkit-html-attribute-value"></span></span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">head</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/head</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 26px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">body</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">page page-id-164823 page-child parent-pageid-13949 page-template page-template-page-almanac-single page-template-page-almanac-single-php</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">page-wrap</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">header</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">top</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">top</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/header</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">content-wrap</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">breadcrumbs breadcrumbs-header</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/div</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">grid group</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">almanac-posts grid-2-3</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">article</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">module</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164823</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h1</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">screen-reader</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">text-rendering</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h1</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">meta</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">blockquote</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/blockquote</span>&gt;</span>&#8203;</span></li><li title="" class="parent selected" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">figure</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164825 media-164825</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">align-none</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/figure</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node">There are four possible values:</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">ul</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/ul</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">&lt; 20px enables ligatures</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">figure</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164824 media-164824</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">align-none</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/figure</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Example</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">pre</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">rel</span>=&#8203;"<span class="webkit-html-attribute-value">CSS</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value"> language-css</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/pre</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Performance</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">blockquote</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/blockquote</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node">It's tempting to do:</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">pre</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">rel</span>=&#8203;"<span class="webkit-html-attribute-value">CSS</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value"> language-css</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/pre</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">browser-support</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Browser Support</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">table</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">browser-support-table</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/table</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/article</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">bsap-doubles</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/div</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">comments</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/section</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/section</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">aside</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">grid-1-3 entry-unrelated</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/aside</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-pseudo-element">::after</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h2</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">pre-footer-title</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">What now? I have some ideas for you.</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h2</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">footer-calls-to-action</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/section</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h2</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">pre-footer-title</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">We can do the real footer now.</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h2</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">footer</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">site-footer site-footer-links</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/footer</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">footer</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">site-footer site-footer-colophon</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/footer</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">svg</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">width</span>=&#8203;"<span class="webkit-html-attribute-value">0</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">height</span>=&#8203;"<span class="webkit-html-attribute-value">0</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">screen-reader</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/svg</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.4" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.4">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;plugins/&#8203;akismet/&#8203;_inc/&#8203;form.js?ver=3.0.4</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/plugins/anti-spam-pro/js/anti-spam-pro-3.1.js" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/plugins/anti-spam-pro/js/anti-spam-pro-3.1.js">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;plugins/&#8203;anti-spam-pro/&#8203;js/&#8203;anti-spam-pro-3.1.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/uploads/minqueue-cache/minqueue-cb4ed8f2-7f050370.js" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/uploads/minqueue-cache/minqueue-cb4ed8f2-7f050370.js">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;uploads/&#8203;minqueue-cache/&#8203;minqueue-cb4ed8f2-7f050370.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/global-ck.js?v=6.1" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/global-ck.js?v=6.1">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;themes/&#8203;CSS-Tricks-12/&#8203;js/&#8203;min/&#8203;global-ck.js?v=6.1</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">async</span><span class="webkit-html-attribute-value"></span></span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://codepen.io/assets/embed/ei.js" class="webkit-html-resource-link" title="http://codepen.io/assets/embed/ei.js">/&#8203;/&#8203;codepen.io/&#8203;assets/&#8203;embed/&#8203;ei.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/almanac-single-ck.js?v=6.1" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/almanac-single-ck.js?v=6.1">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;themes/&#8203;CSS-Tricks-12/&#8203;js/&#8203;min/&#8203;almanac-single-ck.js?v=6.1</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-comment">&lt;!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using apc
+Database Caching 17/41 queries in 0.246 seconds using apc
+Object Caching 3141/3222 objects using apc
+Content Delivery Network via cdn.css-tricks.com
+
+ Served from: css-tricks.com @ 2015-02-02 14:06:46 by W3 Total Cache --&gt;</span></span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/body</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/html</span>&gt;</span>&#8203;</span></li></ol></ol></div><div class="outline-disclosure component-root platform-mac"><ol class="elements-tree-outline source-code" tabindex="0"><li title="" draggable="true"><span class="highlight"><span class="webkit-html-doctype">&lt;!DOCTYPE html&gt;</span></span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">html</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">lang</span>=&#8203;"<span class="webkit-html-attribute-value">en</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span><span class="webkit-html-attribute-value"></span></span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">head</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/head</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 26px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">body</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">page page-id-164823 page-child parent-pageid-13949 page-template page-template-page-almanac-single page-template-page-almanac-single-php</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">page-wrap</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">header</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">top</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">top</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/header</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">content-wrap</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">breadcrumbs breadcrumbs-header</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/div</span>&gt;</span>&#8203;</span></li><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">grid group</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent expanded" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">almanac-posts grid-2-3</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" class="parent expanded" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">article</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">module</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164823</span>"</span>&gt;</span>&#8203;</span></li><ol class="children expanded"><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h1</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">screen-reader</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">text-rendering</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h1</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">meta</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">blockquote</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/blockquote</span>&gt;</span>&#8203;</span></li><li title="" class="parent selected" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">figure</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164825 media-164825</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">align-none</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/figure</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node">There are four possible values:</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">ul</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/ul</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">&lt; 20px enables ligatures</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">figure</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">post-164824 media-164824</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">align-none</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/figure</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true" class=""><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Example</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">pre</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">rel</span>=&#8203;"<span class="webkit-html-attribute-value">CSS</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value"> language-css</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/pre</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Performance</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">blockquote</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/blockquote</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node">It's tempting to do:</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">pre</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">rel</span>=&#8203;"<span class="webkit-html-attribute-value">CSS</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value"> language-css</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/pre</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h3</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">browser-support</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">Browser Support</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h3</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">table</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">browser-support-table</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/table</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><div class="selection selected" style="height: 13px;"></div><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">p</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/p</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/article</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">div</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">bsap-doubles</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/div</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">id</span>=&#8203;"<span class="webkit-html-attribute-value">comments</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/section</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/section</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">aside</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">grid-1-3 entry-unrelated</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/aside</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-pseudo-element">::after</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h2</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">pre-footer-title</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">What now? I have some ideas for you.</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h2</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">section</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">footer-calls-to-action</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/section</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">h2</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">pre-footer-title</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node">We can do the real footer now.</span>&#8203;<span class="webkit-html-tag">&lt;<span>/h2</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">footer</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">site-footer site-footer-links</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/footer</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">footer</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">site-footer site-footer-colophon</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/footer</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/div</span>&gt;</span>&#8203;</span></li></ol><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">svg</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">width</span>=&#8203;"<span class="webkit-html-attribute-value">0</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">height</span>=&#8203;"<span class="webkit-html-attribute-value">0</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">class</span>=&#8203;"<span class="webkit-html-attribute-value">screen-reader</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/svg</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.4" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/plugins/akismet/_inc/form.js?ver=3.0.4">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;plugins/&#8203;akismet/&#8203;_inc/&#8203;form.js?ver=3.0.4</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/plugins/anti-spam-pro/js/anti-spam-pro-3.1.js" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/plugins/anti-spam-pro/js/anti-spam-pro-3.1.js">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;plugins/&#8203;anti-spam-pro/&#8203;js/&#8203;anti-spam-pro-3.1.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/uploads/minqueue-cache/minqueue-cb4ed8f2-7f050370.js" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/uploads/minqueue-cache/minqueue-cb4ed8f2-7f050370.js">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;uploads/&#8203;minqueue-cache/&#8203;minqueue-cb4ed8f2-7f050370.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/global-ck.js?v=6.1" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/global-ck.js?v=6.1">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;themes/&#8203;CSS-Tricks-12/&#8203;js/&#8203;min/&#8203;global-ck.js?v=6.1</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">async</span><span class="webkit-html-attribute-value"></span></span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://codepen.io/assets/embed/ei.js" class="webkit-html-resource-link" title="http://codepen.io/assets/embed/ei.js">/&#8203;/&#8203;codepen.io/&#8203;assets/&#8203;embed/&#8203;ei.js</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">src</span>=&#8203;"<span class="webkit-html-attribute-value"><a href="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/almanac-single-ck.js?v=6.1" class="webkit-html-resource-link" title="http://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-12/js/min/almanac-single-ck.js?v=6.1">http:&#8203;/&#8203;/&#8203;cdn.css-tricks.com/&#8203;wp-content/&#8203;themes/&#8203;CSS-Tricks-12/&#8203;js/&#8203;min/&#8203;almanac-single-ck.js?v=6.1</a></span>"</span>&gt;</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" class="parent" draggable="true"><span class="highlight"><span class="webkit-html-tag">&lt;<span class="webkit-html-tag-name">script</span> <span class="webkit-html-attribute"><span class="webkit-html-attribute-name">type</span>=&#8203;"<span class="webkit-html-attribute-value">text/&#8203;javascript</span>"</span>&gt;</span>&#8203;<span class="webkit-html-text-node bogus">…</span>&#8203;<span class="webkit-html-tag">&lt;<span>/script</span>&gt;</span>&#8203;</span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-comment">&lt;!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using apc
+Database Caching 17/41 queries in 0.246 seconds using apc
+Object Caching 3141/3222 objects using apc
+Content Delivery Network via cdn.css-tricks.com
+
+ Served from: css-tricks.com @ 2015-02-02 14:06:46 by W3 Total Cache --&gt;</span></span></li><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/body</span>&gt;</span>&#8203;</span></li></ol><li title="" draggable="true"><span class="highlight"><span class="webkit-html-tag close">&lt;<span>/html</span>&gt;</span>&#8203;</span></li></ol></ol></div></div></div><div id="elements-crumbs"><div class="vbox flex-auto visible"></div></div></div></div><div class="split-view-contents split-view-sidebar vbox visible split-view-contents-second" style="flex-basis: 393px;"><div class="view vbox tabbed-pane sidebar-tabbed-pane visible" tabindex="-1"><div class="tabbed-pane-header"><div class="tabbed-pane-header-contents"><div class="tabbed-pane-header-tabs"><div class="tabbed-pane-header-tab selected" id="tab-Styles" tabindex="-1" style="width: 43.5px;"><span class="tabbed-pane-header-tab-title" title="">Styles</span></div><div class="tabbed-pane-header-tab" id="tab-Computed" tabindex="-1" style="width: 70.609375px;"><span class="tabbed-pane-header-tab-title" title="">Computed</span></div><div class="tabbed-pane-header-tab" id="tab-Event Listeners" tabindex="-1" style="width: 97.453125px;"><span class="tabbed-pane-header-tab-title" title="">Event Listeners</span></div><div class="tabbed-pane-header-tab" id="tab-DOM Breakpoints" tabindex="-1" style="width: 111.03125px;"><span class="tabbed-pane-header-tab-title" title="">DOM Breakpoints</span></div></div><div class="tabbed-pane-header-tabs-drop-down-container"><div class="tabbed-pane-header-tabs-drop-down">»<select class="drop-down-menu"><option id="Properties">Properties</option></select></div></div></div></div><div class="tabbed-pane-content"><div class="sidebar-pane composite fill visible"><div class="body metrics-and-styles"><div class="style-panes-wrapper"><div class="sidebar-pane styles-pane show-user-styles visible"><div class="body"><div class="styles-element-state-pane source-code"><table><tr><td><label><input type="checkbox">:active</label></td><td><label><input type="checkbox">:hover</label></td></tr><tr><td><label><input type="checkbox">:focus</label></td><td><label><input type="checkbox">:visited</label></td></tr></table></div><div><div class="styles-section matched-styles monospace expanded"><div class="header monospace"><div class="subtitle"></div><div class="title"><div class="media-list"></div><div><div class="subtitle"></div><span>element.style</span><span> {</span></div></div></div><ol class="properties monospace"></ol><div>}</div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative-child/style.css?ver=1.4:464" data-uncopyable="style.css?ver=1.4:464"></a></div><span class="selector"><span class="simple-selector selector-matches">#slider-innovation-design-hold</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="height: 600px;">height</span>: <span class="expand-element"></span><span class="value">600px</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:137" data-uncopyable="framework.css:137"></a></div><span class="selector"><span class="simple-selector">body</span>, <span class="simple-selector selector-matches">div</span>, <span class="simple-selector">dl</span>, <span class="simple-selector">dt</span>, <span class="simple-selector">dd</span>, <span class="simple-selector">ul</span>, <span class="simple-selector">ol</span>, <span class="simple-selector">li</span>, <span class="simple-selector">h1</span>, <span class="simple-selector">h2</span>, <span class="simple-selector">h3</span>, <span class="simple-selector">h4</span>, <span class="simple-selector">h5</span>, <span class="simple-selector">h6</span>, <span class="simple-selector">pre</span>, <span class="simple-selector">form</span>, <span class="simple-selector">fieldset</span>, <span class="simple-selector">p</span>, <span class="simple-selector">blockquote</span>, <span class="simple-selector">th</span>, <span class="simple-selector">td</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="margin: 0;">margin</span>: <span class="expand-element"></span><span class="value">0</span>;</li><li title="" class="parent"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="padding: 0;">padding</span>: <span class="expand-element"></span><span class="value">0</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:7" data-uncopyable="framework.css:7"></a></div><span class="selector"><span class="simple-selector selector-matches">*</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="overloaded inactive"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-box-sizing: border-box;">-webkit-box-sizing</span>: <span class="expand-element"></span><span class="value">border-box</span>;</li><li title="" class="has-ignorable-error overloaded not-parsed-ok inactive"><div class="exclamation-mark" title="Unknown property name."></div><span class="webkit-css-property" title="-moz-box-sizing: border-box;">-moz-box-sizing</span>: <span class="expand-element"></span><span class="value">border-box</span>;</li><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="box-sizing: border-box;">box-sizing</span>: <span class="expand-element"></span><span class="value">border-box</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace user-rule read-only expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"></div><div><div class="subtitle">user agent stylesheet</div><span class="selector"><span class="simple-selector selector-matches">div</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="display: block;">display</span>: <span class="expand-element"></span><span class="value">block</span>;</li></ol><div>}</div></div><div class="sidebar-separator">Pseudo ::selection element</div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/style.css:66" data-uncopyable="style.css:66"></a></div><span class="selector"><span class="simple-selector selector-matches">::selection</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="background: #F0F0F0;">background</span>: <span class="expand-element"></span><span class="value"><nobr><span class="swatch" title="Click to open a colorpicker.
+Shift-click to change color format."><span class="swatch-inner" style="background-color: rgb(240, 240, 240);"></span></span><span>#F0F0F0</span></nobr></span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="sidebar-separator">Inherited from <span class="node-link" title="li"><span>li</span></span></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:143" data-uncopyable="framework.css:143"></a></div><span class="selector"><span class="simple-selector">ul</span>, <span class="simple-selector selector-matches">li</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="list-style: none;">list-style</span>: <span class="expand-element"></span><span class="value">none</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace user-rule read-only expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"></div><div><div class="subtitle">user agent stylesheet</div><span class="selector"><span class="simple-selector selector-matches">li</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="display: list-item;">display</span>: <span class="expand-element"></span><span class="value">list-item</span>;</li><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="text-align: -webkit-match-parent;">text-align</span>: <span class="expand-element"></span><span class="value">-webkit-match-parent</span>;</li></ol><div>}</div></div><div class="sidebar-separator">Inherited from <span class="node-link" title="ul.slides"><span>ul</span><span class="extra">.slides</span></span></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/style.css:1955" data-uncopyable="style.css:1955"></a></div><span class="selector"><span class="simple-selector selector-matches">.post-slider .slides</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="zoom: 1;">zoom</span>: <span class="expand-element"></span><span class="value">1</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/style.css:1927" data-uncopyable="style.css:1927"></a></div><span class="selector"><span class="simple-selector selector-matches">.slides</span>, <span class="simple-selector">.bean-control-nav</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent overloaded"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="list-style: none;">list-style</span>: <span class="expand-element"></span><span class="value">none</span>;</li><li title="" class="parent inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="margin: 0;">margin</span>: <span class="expand-element"></span><span class="value">0</span>;</li><li title="" class="parent inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="padding: 0;">padding</span>: <span class="expand-element"></span><span class="value">0</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:143" data-uncopyable="framework.css:143"></a></div><span class="selector"><span class="simple-selector selector-matches">ul</span>, <span class="simple-selector">li</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent overloaded"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="list-style: none;">list-style</span>: <span class="expand-element"></span><span class="value">none</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace user-rule read-only expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"></div><div><div class="subtitle">user agent stylesheet</div><span class="selector"><span class="simple-selector selector-matches">ul</span>, <span class="simple-selector">menu</span>, <span class="simple-selector">dir</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="display: block;">display</span>: <span class="expand-element"></span><span class="value">block</span>;</li><li title="" class="overloaded"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="list-style-type: disc;">list-style-type</span>: <span class="expand-element"></span><span class="value">disc</span>;</li><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-margin-before: 1em;">-webkit-margin-before</span>: <span class="expand-element"></span><span class="value">1em</span>;</li><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-margin-after: 1em;">-webkit-margin-after</span>: <span class="expand-element"></span><span class="value">1em</span>;</li><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-margin-start: 0px;">-webkit-margin-start</span>: <span class="expand-element"></span><span class="value">0px</span>;</li><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-margin-end: 0px;">-webkit-margin-end</span>: <span class="expand-element"></span><span class="value">0px</span>;</li><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-padding-start: 40px;">-webkit-padding-start</span>: <span class="expand-element"></span><span class="value">40px</span>;</li></ol><div>}</div></div><div class="sidebar-separator">Inherited from <span class="node-link" title="body.home.page.page-id-5.page-template.page-template-page-home.page-template-page-home-php.chrome.group-blog"><span>body</span><span class="extra">.home.page.page-id-5.page-template.page-template-page-home.page-template-page-home-php.chrome.group-blog</span></span></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative-child/style.css?ver=1.4:144" data-uncopyable="style.css?ver=1.4:144"></a></div><span class="selector"><span class="simple-selector selector-matches">body</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="parent"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="font: 16px/28px &quot;source_sans_proregular&quot;, Helvetica, sans-serif;">font</span>: <span class="expand-element"></span><span class="value">16px/28px "source_sans_proregular", Helvetica, sans-serif</span>;</li><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="letter-spacing: 0.03em;">letter-spacing</span>: <span class="expand-element"></span><span class="value">0.03em</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/style.css:17" data-uncopyable="style.css:17"></a></div><span class="selector"><span class="simple-selector selector-matches">body</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="inherited"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="background-color: #FFF;">background-color</span>: <span class="expand-element"></span><span class="value"><nobr><span class="swatch" title="Click to open a colorpicker.
+Shift-click to change color format."><span class="swatch-inner" style="background-color: rgb(255, 255, 255);"></span></span><span>#FFF</span></nobr></span>;</li><li title="" class="parent overloaded"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="font: 14px/24px Helvetica, sans-serif;">font</span>: <span class="expand-element"></span><span class="value">14px/24px Helvetica, sans-serif</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:6" data-uncopyable="framework.css:6"></a></div><span class="selector"><span class="simple-selector selector-matches">body</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="-webkit-font-smoothing: antialiased;">-webkit-font-smoothing</span>: <span class="expand-element"></span><span class="value">antialiased</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/:30" data-uncopyable="(index):30"></a></div><span class="selector"><span class="simple-selector selector-matches">body</span>, <span class="simple-selector">p</span>, <span class="simple-selector">.archives-list ul li a:hover</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title=""><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="color:  #818B92;">color</span>: <span class="expand-element"></span><span class="value"><nobr><span class="swatch" title="Click to open a colorpicker.
+Shift-click to change color format."><span class="swatch-inner" style="background-color: rgb(129, 139, 146);"></span></span><span>#818B92</span></nobr></span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div><div class="sidebar-separator">Inherited from <span class="node-link" title="html.csstransforms.csstransforms3d.csstransitions.js.cssanimations"><span>html</span><span class="extra">.csstransforms.csstransforms3d.csstransitions.js.cssanimations</span></span></div><div class="styles-section matched-styles monospace navigable expanded"><div class="header monospace"><div class="subtitle"></div><div class="title styles-selector"><div class="media-list"><div class="media"><div class="subtitle"><a href="http://www.asynchrony.com/" class="subtitle webkit-html-resource-link" title="http://www.asynchrony.com/" style="float: right;">www.asynchrony.com/</a></div><span title="all">media="all"</span></div></div><div><div class="subtitle"><a class=" webkit-html-resource-link" title="http://www.asynchrony.com/wp-content/themes/krative/assets/css/framework.css:8" data-uncopyable="framework.css:8"></a></div><span class="selector"><span class="simple-selector selector-matches">html</span></span><span> {</span></div></div></div><ol class="properties monospace"><li title="" class="overloaded"><input class="enabled-button" type="checkbox"><span class="webkit-css-property" title="font-size: 62.5%;">font-size</span>: <span class="expand-element"></span><span class="value">62.5%</span>;</li></ol><div>}<div class="sidebar-pane-button-new-rule" title="Insert Style Rule"></div></div></div></div></div></div><div class="sidebar-pane-toolbar"><button class="pane-title-button element-state" title="Toggle Element State"></button><button class="pane-title-button add" id="add-style-button-test-id" title="New Style Rule"><div class="long-click-glyph fill"></div></button></div><div class="sidebar-pane visible"><div class="body"><div class="metrics"><div class="margin" style="background-color: rgba(246, 178, 107, 0.658824);"><div class="label">margin</div><div class="top">‒</div><br><div class="left">‒</div><div class="border" style="background-color: rgba(255, 229, 153, 0.658824);"><div class="label">border</div><div class="top">‒</div><br><div class="left">‒</div><div class="padding" style="background-color: rgba(147, 196, 125, 0.54902);"><div class="label">padding</div><div class="top">‒</div><br><div class="left">‒</div><div class="content" style="background-color: rgba(111, 168, 220, 0.658824);"><span>1539</span> × <span>600</span></div><div class="right">‒</div><br><div class="bottom">‒</div></div><div class="right">‒</div><br><div class="bottom">‒</div></div><div class="right">‒</div><br><div class="bottom">‒</div></div></div></div></div></div><div class="sidebar-pane-filter-box"><input type="text" placeholder="Find in Styles"></div></div><div class="sidebar-pane-toolbar"></div></div></div></div></div></div></div></div></div></div><div class="split-view-contents split-view-sidebar vbox visible split-view-contents-second" style="flex-basis: 126px;"><div class="view vbox visible" id="drawer-contents"><div class="view vbox tabbed-pane visible" tabindex="-1" id="drawer-tabbed-pane"><div class="tabbed-pane-header ns-resizer-widget"><div class="tabbed-pane-header-contents"><div class="tabbed-pane-header-tabs"><div class="tabbed-pane-header-tab selected" id="tab-console" tabindex="-1" style="width: 56.765625px;"><span class="tabbed-pane-header-tab-title" title="">Console</span></div><div class="tabbed-pane-header-tab" id="tab-sources.search" tabindex="-1" style="width: 48.28125px;"><span class="tabbed-pane-header-tab-title" title="">Search</span></div><div class="tabbed-pane-header-tab" id="tab-emulation" tabindex="-1" style="width: 68.03125px;"><span class="tabbed-pane-header-tab-title" title="">Emulation</span></div><div class="tabbed-pane-header-tab" id="tab-rendering" tabindex="-1" style="width: 69.28125px;"><span class="tabbed-pane-header-tab-title" title="">Rendering</span></div></div></div></div><div class="tabbed-pane-content"><div class="view vbox console-view-wrapper visible"><div class="view vbox visible"><style type="text/css">/*
+ * Copyright (C) 2013 Google Inc. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+.filter-text-filter {
+    display: flex;
+    margin-left: 1px;
+    margin-right: 2px;
+    flex: 0 1 120px;
+    min-width: 40px;
+}
+
+.filter-text-filter.supports-regex {
+    flex: 0 0 155px;
+}
+
+.filter-text-filter label {
+    margin: auto 0;
+}
+
+.filter-bitset-filter {
+    padding: 0 10px !important;
+    overflow: hidden;
+    display: flex !important;
+}
+
+.filter-bitset-filter li {
+    display: inline-block;
+    margin: auto 2px;
+    padding: 4px 6px 3px 6px;
+    background: transparent;
+    text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
+    border-radius: 8px;
+}
+
+.filter-bitset-filter-divider {
+    background-color: #ccc;
+    height: 16px;
+    width: 1px;
+    margin: auto 2px;
+    display: inline-block;
+}
+
+.filter-bitset-filter li.selected,
+.filter-bitset-filter li:hover,
+.filter-bitset-filter li:active {
+    color: white;
+    text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+}
+
+.filter-bitset-filter li:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.filter-bitset-filter li.selected {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.filter-bitset-filter li:active {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.filter-combobox-filter {
+    margin-left: 5px;
+    margin-right: 2px;
+    flex: 0 0 auto;
+}
+
+.filter-checkbox-filter {
+    padding-left: 4px;
+    padding-right: 2px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: flex;
+}
+
+.filter-checkbox-filter > label {
+    display: flex;
+    margin: auto 0;
+}
+
+.filter-text-invalid {
+    background-color: rgb(255, 200, 200);
+}
+
+.filter-checkbox-filter .checkbox-filter-checkbox {
+    width: 10px;
+    height: 10px;
+    margin: auto 3px;
+    padding: 0;
+    border-radius: 2px;
+    border: solid 1px;
+    display: inline-block;
+    overflow: visible;
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+
+.filter-checkbox-filter .checkbox-filter-checkbox-check {
+    -webkit-appearance: none;
+    width: 11px;
+    height: 11px;
+    margin-top: -2px;
+    margin-left: 1px;
+}
+
+.filter-checkbox-filter .checkbox-filter-checkbox-checked {
+    background-image: url(Images/statusbarButtonGlyphs.png);
+    background-size: 320px 144px;
+    background-position: -129px -110px;
+}
+
+.filters-toggle > .glyph {
+    -webkit-mask-position: -32px -48px;
+}
+
+.filters-toggle.toggled-shown .glyph {
+    background-color: rgb(66, 129, 235);
+}
+
+.filters-toggle.toggled-active .glyph {
+    background-color: rgb(216, 0, 0);
+}
+
+/*# sourceURL=ui/filter.css */</style><div class="view vbox visible console-view"><div class="search-bar status-bar hidden" style="order: 100;"><table class="toolbar-search" cellspacing="0"><tr><td><span class="toolbar-search-control"><input class="search-replace" id="search-input-field" placeholder="Find"><label class="search-results-matches" for="search-input-field"></label><div class="toolbar-search-navigation-controls"><div class="toolbar-search-navigation toolbar-search-navigation-prev" title="Search Previous"></div><div class="toolbar-search-navigation toolbar-search-navigation-next" title="Search Next"></div></div></span></td><td><button class="search-action-button hidden" tabindex="-1">Find</button></td><td><button class="search-action-button hidden" tabindex="-1">Previous</button></td><td><span><input type="checkbox" id="search-replace-trigger1"><label for="search-replace-trigger1">Replace</label></span></td><td><button class="search-action-button" tabindex="-1">Cancel</button></td></tr><tr class="hidden"><td><input class="search-replace toolbar-replace-control" placeholder="Replace"></td><td><button class="search-action-button" disabled="" tabindex="-1">Replace</button></td><td><button class="search-action-button">Replace All</button></td></tr></table></div><div class="console-status-bar"><button class="clear-status-bar-item status-bar-item" title="Clear console log."><div class="glyph"></div></button><button class="filters-toggle status-bar-item toggled-inactive" title="Filter"><div class="glyph"></div></button><span class="status-bar-select-container"><select class="status-bar-item console-context"><option>&lt;top frame&gt;</option><option>&nbsp;&nbsp;&nbsp;&nbsp;1Password: Password Manager and Secure Wallet</option><option>&nbsp;&nbsp;&nbsp;&nbsp;AdBlock</option><option>&nbsp;&nbsp;&nbsp;&nbsp;Appspector</option><option>&nbsp;&nbsp;&nbsp;&nbsp;DomFlags</option><option>&nbsp;&nbsp;&nbsp;&nbsp;JSONView</option><option>&nbsp;&nbsp;&nbsp;&nbsp;LiveReload</option><option>&nbsp;&nbsp;&nbsp;&nbsp;Remote Torrent Adder</option><option>&nbsp;&nbsp;&nbsp;&nbsp;RSS Subscription Extension (by Google)</option><option>&nbsp;&nbsp;&nbsp;&nbsp;Save to Pocket</option><option>&nbsp;&nbsp;&nbsp;&nbsp;Streamkeys</option><option>&nbsp;&nbsp;&nbsp;&nbsp;Web Developer</option><option>&nbsp;&nbsp;&nbsp;&nbsp;WhatFont</option></select><div class="status-bar-select-arrow"></div></span><label class="status-bar-item checkbox" title="Do not clear log on page reload / navigation."><input type="checkbox">Preserve log</label><label class="status-bar-item checkbox hidden"><input type="checkbox">Show all messages</label></div><div class="console-filters-header hidden"><div class="hbox"><div class="filter-text-filter supports-regex"><input class="search-replace toolbar-replace-control" placeholder="Filter" id="filter-input-field"><input type="checkbox" id="text-filter-regex"><label for="text-filter-regex">Regex</label></div><div class="filter-bitset-filter status-bar-item" title="Use ⌘ Click to select multiple types."><li class="all selected">All</li><div class="filter-bitset-filter-divider"></div><li class="error">Errors</li><li class="warning">Warnings</li><li class="info">Info</li><li class="log">Logs</li><li class="debug">Debug</li></div><div class="filter-checkbox-filter filter-checkbox-filter-hide-network-messages"><label><div class="checkbox-filter-checkbox"><div class="checkbox-filter-checkbox-check"></div></div><span class="type">Hide network messages</span></label></div></div></div><div id="console-messages" class="monospace" style="overflow: auto;"><div class="console-message" style="display: none;"><span class="console-info">0 messages are hidden by filters.</span> <span class="console-info node-link">Show all messages.</span></div><div class="viewport-control-gap-element" style="height: 208px;">.</div><div class="console-group console-group-messages"><div class="console-message-wrapper"><div class="console-message console-error-level"><span class="console-message-text source-code"><a href="http://www.asynchrony.com/wp-content/uploads/2013/12/client-deloitte@2x.png" class="console-message-url webkit-html-external-link" title="http://www.asynchrony.com/wp-content/uploads/2013/12/client-deloitte@2x.png" target="_blank">http://www.asynchrony.com/wp-content/uploads/2013/12/client-deloitte@2x.png</a> <span>Failed to load resource: the server responded with a status of 404 (Not Found)</span></span></div></div><div class="console-message-wrapper"><div class="console-message console-error-level"><span class="console-message-text source-code"><a href="http://www.asynchrony.com/wp-content/uploads/2013/08/work-mako@2x.png" class="console-message-url webkit-html-external-link" title="http://www.asynchrony.com/wp-content/uploads/2013/08/work-mako@2x.png" target="_blank">http://www.asynchrony.com/wp-content/uploads/2013/08/work-mako@2x.png</a> <span>Failed to load resource: the server responded with a status of 404 (Not Found)</span></span></div></div><div class="console-message-wrapper"><div class="console-message console-error-level"><span class="console-message-text source-code"><a href="http://www.asynchrony.com/wp-content/uploads/2014/10/USTRANSCOM@2x.jpg" class="console-message-url webkit-html-external-link" title="http://www.asynchrony.com/wp-content/uploads/2014/10/USTRANSCOM@2x.jpg" target="_blank">http://www.asynchrony.com/wp-content/uploads/2014/10/USTRANSCOM@2x.jpg</a> <span>Failed to load resource: the server responded with a status of 404 (Not Found)</span></span></div></div><div class="console-message-wrapper"><div class="console-message console-error-level"><span class="console-message-text source-code"><a href="http://www.asynchrony.com/wp-content/uploads/2013/08/work-fusion@2x.png" class="console-message-url webkit-html-external-link" title="http://www.asynchrony.com/wp-content/uploads/2013/08/work-fusion@2x.png" target="_blank">http://www.asynchrony.com/wp-content/uploads/2013/08/work-fusion@2x.png</a> <span>Failed to load resource: the server responded with a status of 404 (Not Found)</span></span></div></div><div class="console-message-wrapper"><div class="console-message console-error-level"><span class="console-message-text source-code"><a href="http://www.asynchrony.com/wp-content/uploads/2013/12/client-sothebys@2x.png" class="console-message-url webkit-html-external-link" title="http://www.asynchrony.com/wp-content/uploads/2013/12/client-sothebys@2x.png" target="_blank">http://www.asynchrony.com/wp-content/uploads/2013/12/client-sothebys@2x.png</a> <span>Failed to load resource: the server responded with a status of 404 (Not Found)</span></span></div></div></div><div class="viewport-control-gap-element" style="height: 0px;">.</div><span style="display: block;"><div class="source-code text-prompt" id="console-prompt" spellcheck="false"></div></span><div class="console-view-fix-select-all">.</div></div></div></div></div></div></div></div></div></div></div></div></div></div><iframe src="chrome-extension://fbiodiodggnlakggeeckkjccjhhjndnb/devtools-chrome.html" style="display: none;"></iframe><iframe src="chrome-extension://fngmhnnpilhplaeedifhccceomclgfbg/devtools/devtools-page.html" style="display: none;"></iframe><iframe src="chrome-extension://nindoglnpjcjoaheijieagogboabafkc/src/devtools/devtools.html" style="display: none;"></iframe></body>

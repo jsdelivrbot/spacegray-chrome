@@ -1,0 +1,17 @@
+@mixin deep {
+  body /deep/ {
+    & {
+      @content;
+    }
+  }
+}
+
+@mixin platform($platform: 'all') {
+  @if $platform == "all"{
+    body.undocked.platform-mac.inactive{
+      &{
+        @content;
+      }
+    }
+  }
+}

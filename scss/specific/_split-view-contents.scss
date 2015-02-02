@@ -1,0 +1,63 @@
+.outline-disclosure li.selected .selection {
+  display: block;
+  background-color: lighten($gray, 5%);
+
+  &:before{
+    background: transparent !important;
+  }
+}
+
+.outline-disclosure{
+  li.parent{
+    &::before{
+      @extend .icon-keyboard-arrow-right;
+      background-color: transparent !important;
+      -webkit-mask-image: none !important;
+      color: $text-white;
+    }
+  }
+  ol:focus li.parent.selected{
+    &::before {
+      @extend .icon-keyboard-arrow-down;
+      background-color: transparent !important;
+      -webkit-mask-image: none !important;
+      color: $text-white;
+    }
+  }
+}
+
+// .outline-disclosure .elements-tree-outline li.parent{
+//   @extend .icon-keyboard-arrow-right;
+//   &:before{
+//     -webkit-mask-image: none;
+//     color: $text-white;
+//     background: transparent;
+//   }
+//
+//   &.expanded{
+//     @extend .icon-keyboard-arrow-down;
+//     color: $text-white;
+//
+//     &:before{
+//       -webkit-mask-image: none;
+//       color: $text-white;
+//       background: transparent;
+//     }
+//   }
+// }
+
+#elements-crumbs {
+  flex: 0 0 27px !important;
+  border-top: 1px solid $gray-dark !important;
+  background: $gray-dark !important;
+}
+
+.crumbs .crumb.selected, .crumbs .crumb.selected:hover {
+  background-color: $aqua !important;
+}
+
+@include deep{
+  .webkit-html-pseudo-element {
+    color: $yellow !important;
+  }
+}

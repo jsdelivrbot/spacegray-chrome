@@ -1,0 +1,20 @@
+#drawer-tabbed-pane{
+  > .tabbed-pane-header{
+    border-bottom: 2px solid $gray;
+    background: $gray-medium;
+    padding-bottom: 2px;
+    flex: 0 0 28px;
+  }
+
+  .tabbed-pane-header-tabs{
+    color: $text-gray;
+
+    .tabbed-pane-header-tab{
+      &.selected{
+        color: $text-white;
+        border-color: $gray-medium !important;
+        background: $gray-medium !important;
+      }
+    }
+  }
+}

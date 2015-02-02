@@ -1,0 +1,22 @@
+@include platform{
+  .toolbar{
+    flex: 0 0 30px;
+    .tabbed-pane-header-tab{
+      height: 30px;
+      text-align: center;
+      line-height: 21px;
+      color: $text-gray;
+
+      &.selected{
+        border: none;
+        background: $gray;
+        color: $text-white;
+      }
+    }
+  }
+  .toolbar-colors{
+    background-image: none !important;
+    background-color: $gray-dark;
+    border: none;
+  }
+}
