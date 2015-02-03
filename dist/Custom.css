@@ -78,6 +78,9 @@ body.undocked.platform-mac.inactive .toolbar-colors, body.undocked.platform-mac.
   background-color: #1c1f26;
   border: none; }
 
+.toolbar-controls-right {
+  padding-top: 4px; }
+
 .sidebar-pane {
   background: #232830 !important;
   color: #bfc5cc !important;
@@ -140,11 +143,9 @@ body /deep/ .value {
 .metrics .label {
   color: #2b303b !important; }
 
-.outline-disclosure li.selected .selection {
+body /deep/ .outline-disclosure li.selected .selection {
   display: block;
-  background-color: #363c4a; }
-  .outline-disclosure li.selected .selection:before {
-    background: transparent !important; }
+  background-color: #363c4a !important; }
 
 body /deep/ .outline-disclosure li.parent {
   margin-left: 0; }

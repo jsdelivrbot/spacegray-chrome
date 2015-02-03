@@ -1,9 +1,11 @@
-.outline-disclosure li.selected .selection {
-  display: block;
-  background-color: lighten($gray, 5%);
+@include deep{
+  .outline-disclosure li.selected .selection {
+    display: block;
+    background-color: lighten($gray, 5%) !important;
 
-  &:before{
-    background: transparent !important;
+    &:before{
+      // background: transparent !important;
+    }
   }
 }
 @include deep{

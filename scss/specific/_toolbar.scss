@@ -20,3 +20,15 @@
     border: none;
   }
 }
+button{
+  &.status-bar-item{
+    &.dock-status-bar-item{
+      .toggled-bottom .glyph{
+
+      }
+    }
+  }
+}
+.toolbar-controls-right{
+  padding-top: 4px;
+}
