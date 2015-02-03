@@ -7,25 +7,47 @@
   }
 }
 @include deep{
-  .outline-disclosure .source-code{
-    li.parent{
-      &::before{
-        @extend %iconfont;
-        @extend %icon-keyboard-arrow-right;
-        background-color: transparent !important;
-        -webkit-mask-image: none !important;
-        color: $text-white;
+  .outline-disclosure{
+    ol{
+      // -webkit-padding-start: 0px;
+    }
+    li{
+      // padding: 0;
+      // margin: 0;
+      &.parent{
+        margin-left: 0;
+        &::before{
+          @extend %iconfont;
+          @extend %icon-keyboard-arrow-right;
+          background-color: transparent !important;
+          -webkit-mask-image: none !important;
+          color: $text-white;
+          font-size: 14px;
+          @include transform(scale(1.5));
+          position: relative !important;
+          left: -5px !important;
+        }
+        &.expanded{
+          &::before {
+            @extend %icon-keyboard-arrow-down;
+          }
+        }
       }
     }
-    ol:focus li.parent.selected{
-      &::before {
-        @extend %iconfont;
-        @extend %icon-keyboard-arrow-down;
-        background-color: transparent !important;
-        -webkit-mask-image: none !important;
-        color: $text-white;
-      }
-    }
+    // ol:focus li.parent.selected{
+    //   &::before {
+    //     @extend %iconfont;
+    //     @extend %icon-keyboard-arrow-down;
+    //     background-color: transparent !important;
+    //     -webkit-mask-image: none !important;
+    //     color: $text-white;
+    //     font-size: 17px !important;
+    //     display: inline-block !important;
+    //     position: relative !important;
+    //     left: -5px !important;
+    //     top: -2px !important;
+    //   }
+    // }
   }
 }
 

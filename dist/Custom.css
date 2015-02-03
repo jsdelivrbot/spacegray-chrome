@@ -4,7 +4,7 @@
   src: url("https://cdn.rawgit.com/sevenfoxes/spacegray-chrome/master/dist/icomoon.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
-body /deep/ .outline-disclosure .source-code li.parent::before, body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before,
+body /deep/ .outline-disclosure li.parent::before,
 [class^="icon-"],
 [class*=" icon-"] {
   font-family: 'icomoon' !important;
@@ -18,10 +18,10 @@ body /deep/ .outline-disclosure .source-code li.parent::before, body /deep/ .out
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before {
+body /deep/ .outline-disclosure li.parent.expanded::before {
   content: "\e60b" !important; }
 
-body /deep/ .outline-disclosure .source-code li.parent::before {
+body /deep/ .outline-disclosure li.parent::before {
   content: "\e60d" !important; }
 
 li {
@@ -146,14 +146,20 @@ body /deep/ .value {
   .outline-disclosure li.selected .selection:before {
     background: transparent !important; }
 
-body /deep/ .outline-disclosure .source-code li.parent::before {
-  background-color: transparent !important;
-  -webkit-mask-image: none !important;
-  color: #bfc5cc; }
-body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before {
-  background-color: transparent !important;
-  -webkit-mask-image: none !important;
-  color: #bfc5cc; }
+body /deep/ .outline-disclosure li.parent {
+  margin-left: 0; }
+  body /deep/ .outline-disclosure li.parent::before {
+    background-color: transparent !important;
+    -webkit-mask-image: none !important;
+    color: #bfc5cc;
+    font-size: 14px;
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    transform: scale(1.5);
+    position: relative !important;
+    left: -5px !important; }
 
 #elements-crumbs {
   flex: 0 0 27px !important;
