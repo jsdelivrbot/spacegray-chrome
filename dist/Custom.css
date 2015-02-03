@@ -140,10 +140,10 @@ body /deep/ .value {
 .metrics .label {
   color: #2b303b !important; }
 
-.outline-disclosure li.selected .selection {
+html /deep/ .outline-disclosure li.selected .selection {
   display: block;
-  background-color: #363c4a; }
-  .outline-disclosure li.selected .selection:before {
+  background-color: #363c4a !important; }
+  html /deep/ .outline-disclosure li.selected .selection:before {
     background: transparent !important; }
 
 body /deep/ .outline-disclosure .source-code li.parent::before {
@@ -151,7 +151,6 @@ body /deep/ .outline-disclosure .source-code li.parent::before {
   -webkit-mask-image: none !important;
   color: #bfc5cc; }
 body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before {
-  background-color: transparent !important;
   -webkit-mask-image: none !important;
   color: #bfc5cc; }
 
