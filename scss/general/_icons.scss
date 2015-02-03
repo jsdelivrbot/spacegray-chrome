@@ -1,100 +1,98 @@
 @font-face {
   font-family: 'icomoon';
-  src:url('fonts/icomoon.eot');
-  src:url('fonts/icomoon.eot?#iefix25lq2c') format('embedded-opentype'),
-    url('fonts/icomoon.woff?25lq2c') format('woff'),
-    url('fonts/icomoon.ttf?25lq2c') format('truetype'),
-    url('fonts/icomoon.svg?25lq2c#icomoon') format('svg');
+  src:url('icomoon.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icomoon';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+%iconfont,
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: 'icomoon' !important;
+  speak: none !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1 !important;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-console::before {
-  content: "\e600";
+%icon-console::before {
+  content: "\e600" !important;
 }
 
-.icon-input::before {
-  content: "\e601";
+%icon-input::before {
+  content: "\e601" !important;
 }
 
-.icon-launch::before {
-  content: "\e602";
+%icon-launch::before {
+  content: "\e602" !important;
 }
 
-.icon-search::before {
-  content: "\e603";
+%icon-search::before {
+  content: "\e603" !important;
 }
 
-.icon-settings::before {
-  content: "\e604";
+%icon-settings::before {
+  content: "\e604" !important;
 }
 
-.icon-repeat::before {
-  content: "\e605";
+%icon-repeat::before {
+  content: "\e605" !important;
 }
 
-.icon-add::before {
-  content: "\e606";
+%icon-add::before {
+  content: "\e606" !important;
 }
 
-.icon-block::before {
-  content: "\e607";
+%icon-block::before {
+  content: "\e607" !important;
 }
 
-.icon-filter-list::before {
-  content: "\e608";
+%icon-filter-list::before {
+  content: "\e608" !important;
 }
 
-.icon-remove::before {
-  content: "\e609";
+%icon-remove::before {
+  content: "\e609" !important;
 }
 
-.icon-gps-not-fixed::before {
-  content: "\e60a";
+%icon-gps-not-fixed::before {
+  content: "\e60a" !important;
 }
 
-.icon-keyboard-arrow-down::before {
-  content: "\e60b";
+%icon-keyboard-arrow-down::before {
+  content: "\e60b" !important;
 }
 
-.icon-keyboard-arrow-left::before {
-  content: "\e60c";
+%icon-keyboard-arrow-left::before {
+  content: "\e60c" !important;
 }
 
-.icon-keyboard-arrow-right::before {
-  content: "\e60d";
+%icon-keyboard-arrow-right::before {
+  content: "\e60d" !important;
 }
 
-.icon-keyboard-arrow-up::before {
-  content: "\e60e";
+%icon-keyboard-arrow-up::before {
+  content: "\e60e" !important;
 }
 
-.icon-phone-iphone::before {
-  content: "\e60f";
+%icon-phone-iphone::before {
+  content: "\e60f" !important;
 }
 
-.icon-center-focus-strong::before {
-  content: "\e610";
+%icon-center-focus-strong::before {
+  content: "\e610" !important;
 }
 
-.icon-center-focus-weak::before {
-  content: "\e611";
+%icon-center-focus-weak::before {
+  content: "\e611" !important;
 }
 
-.icon-cancel::before {
-  content: "\e612";
+%icon-cancel::before {
+  content: "\e612" !important;
 }

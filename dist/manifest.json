@@ -11,6 +11,6 @@
 		"128": "icon128.png"
   },
   "web_accessible_resources": [
-    "fonts/*"
+    "icomoon.woff"
   ]
 }

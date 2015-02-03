@@ -1,4 +1,4 @@
-#drawer-tabbed-pane{
+#drawer-tabbed-pane {
   > .tabbed-pane-header{
     border-bottom: 2px solid $gray;
     background: $gray-medium;
@@ -6,15 +6,53 @@
     flex: 0 0 28px;
   }
 
-  .tabbed-pane-header-tabs{
+  .tabbed-pane-header-tabs {
     color: $text-gray;
 
-    .tabbed-pane-header-tab{
-      &.selected{
+    .tabbed-pane-header-tab {
+      &.selected {
         color: $text-white;
         border-color: $gray-medium !important;
         background: $gray-medium !important;
       }
     }
   }
+}
+
+#console-messages {
+  .console-message-wrapper {
+    border-top: none !important;
+    padding: 5px 0;
+
+    &:nth-child(even){
+      background: lighten($gray, 5%);
+    }
+  }
+  .console-message, .console-user-command{
+    border-bottom: none !important;
+  }
+
+  .console-error-level {
+    .console-message-text,
+    .section > .header .title{
+      color: $red !important;
+    }
+  }
+  .console-debug-level .console-message-text {
+    color: $aqua !important;
+  }
+  .console-message-wrapper{
+    .link, a{
+      color: $text-gray;
+      &:hover{
+        color: $green !important;
+
+      }
+    }
+  }
+}
+
+.console-formatted-number,
+.console-formatted-boolean {
+    color: $aqua !important;
 }

@@ -1,78 +1,28 @@
 @import url(http://fonts.googleapis.com/css?family=Fira+Mono);
 @font-face {
   font-family: 'icomoon';
-  src: url("fonts/icomoon.eot");
-  src: url("fonts/icomoon.eot?#iefix25lq2c") format("embedded-opentype"), url("fonts/icomoon.woff?25lq2c") format("woff"), url("fonts/icomoon.ttf?25lq2c") format("truetype"), url("fonts/icomoon.svg?25lq2c#icomoon") format("svg");
+  src: url("icomoon.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icomoon';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+body /deep/ .outline-disclosure .source-code li.parent::before, body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before,
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: 'icomoon' !important;
+  speak: none !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1 !important;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.icon-console::before {
-  content: "\e600"; }
+body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before {
+  content: "\e60b" !important; }
 
-.icon-input::before {
-  content: "\e601"; }
-
-.icon-launch::before {
-  content: "\e602"; }
-
-.icon-search::before {
-  content: "\e603"; }
-
-.icon-settings::before {
-  content: "\e604"; }
-
-.icon-repeat::before {
-  content: "\e605"; }
-
-.icon-add::before {
-  content: "\e606"; }
-
-.icon-block::before {
-  content: "\e607"; }
-
-.icon-filter-list::before {
-  content: "\e608"; }
-
-.icon-remove::before {
-  content: "\e609"; }
-
-.icon-gps-not-fixed::before {
-  content: "\e60a"; }
-
-.icon-keyboard-arrow-down::before, .outline-disclosure ol:focus li.parent.selected::before {
-  content: "\e60b"; }
-
-.icon-keyboard-arrow-left::before {
-  content: "\e60c"; }
-
-.icon-keyboard-arrow-right::before, .outline-disclosure li.parent::before {
-  content: "\e60d"; }
-
-.icon-keyboard-arrow-up::before {
-  content: "\e60e"; }
-
-.icon-phone-iphone::before {
-  content: "\e60f"; }
-
-.icon-center-focus-strong::before {
-  content: "\e610"; }
-
-.icon-center-focus-weak::before {
-  content: "\e611"; }
-
-.icon-cancel::before {
-  content: "\e612"; }
+body /deep/ .outline-disclosure .source-code li.parent::before {
+  content: "\e60d" !important; }
 
 li {
   margin-left: -13px;
@@ -112,18 +62,18 @@ body /deep/ .webkit-html-entity-value {
 body /deep/ .cm-css-property {
   color: #bfc5cc; }
 
-body.undocked.platform-mac.inactive .toolbar {
+body.undocked.platform-mac.inactive .toolbar, body.undocked.platform-mac.active .toolbar, body.undocked.platform-mac .toolbar, body.docked.platform-mac.inactive .toolbar, body.docked.platform-mac.active .toolbar, body.docked.platform-mac .toolbar {
   flex: 0 0 30px; }
-  body.undocked.platform-mac.inactive .toolbar .tabbed-pane-header-tab {
+  body.undocked.platform-mac.inactive .toolbar .tabbed-pane-header-tab, body.undocked.platform-mac.active .toolbar .tabbed-pane-header-tab, body.undocked.platform-mac .toolbar .tabbed-pane-header-tab, body.docked.platform-mac.inactive .toolbar .tabbed-pane-header-tab, body.docked.platform-mac.active .toolbar .tabbed-pane-header-tab, body.docked.platform-mac .toolbar .tabbed-pane-header-tab {
     height: 30px;
     text-align: center;
     line-height: 21px;
     color: #65737f; }
-    body.undocked.platform-mac.inactive .toolbar .tabbed-pane-header-tab.selected {
+    body.undocked.platform-mac.inactive .toolbar .tabbed-pane-header-tab.selected, body.undocked.platform-mac.active .toolbar .tabbed-pane-header-tab.selected, body.undocked.platform-mac .toolbar .tabbed-pane-header-tab.selected, body.docked.platform-mac.inactive .toolbar .tabbed-pane-header-tab.selected, body.docked.platform-mac.active .toolbar .tabbed-pane-header-tab.selected, body.docked.platform-mac .toolbar .tabbed-pane-header-tab.selected {
       border: none;
       background: #2b303b;
       color: #bfc5cc; }
-body.undocked.platform-mac.inactive .toolbar-colors {
+body.undocked.platform-mac.inactive .toolbar-colors, body.undocked.platform-mac.active .toolbar-colors, body.undocked.platform-mac .toolbar-colors, body.docked.platform-mac.inactive .toolbar-colors, body.docked.platform-mac.active .toolbar-colors, body.docked.platform-mac .toolbar-colors {
   background-image: none !important;
   background-color: #1c1f26;
   border: none; }
@@ -188,7 +138,7 @@ body /deep/ .value {
   color: #de935f; }
 
 .metrics .label {
-  color: #fff !important; }
+  color: #2b303b !important; }
 
 .outline-disclosure li.selected .selection {
   display: block;
@@ -196,11 +146,11 @@ body /deep/ .value {
   .outline-disclosure li.selected .selection:before {
     background: transparent !important; }
 
-.outline-disclosure li.parent::before {
+body /deep/ .outline-disclosure .source-code li.parent::before {
   background-color: transparent !important;
   -webkit-mask-image: none !important;
   color: #bfc5cc; }
-.outline-disclosure ol:focus li.parent.selected::before {
+body /deep/ .outline-disclosure .source-code ol:focus li.parent.selected::before {
   background-color: transparent !important;
   -webkit-mask-image: none !important;
   color: #bfc5cc; }
@@ -227,5 +177,26 @@ body /deep/ .webkit-html-pseudo-element {
     color: #bfc5cc;
     border-color: #232830 !important;
     background: #232830 !important; }
+
+#console-messages .console-message-wrapper {
+  border-top: none !important;
+  padding: 5px 0; }
+  #console-messages .console-message-wrapper:nth-child(even) {
+    background: #363c4a; }
+#console-messages .console-message, #console-messages .console-user-command {
+  border-bottom: none !important; }
+#console-messages .console-error-level .console-message-text,
+#console-messages .console-error-level .section > .header .title {
+  color: #cc6666 !important; }
+#console-messages .console-debug-level .console-message-text {
+  color: #70a8b8 !important; }
+#console-messages .console-message-wrapper .link, #console-messages .console-message-wrapper a {
+  color: #65737f; }
+  #console-messages .console-message-wrapper .link:hover, #console-messages .console-message-wrapper a:hover {
+    color: #a4cc8d !important; }
+
+.console-formatted-number,
+.console-formatted-boolean {
+  color: #70a8b8 !important; }
 
 /*# sourceMappingURL=Custom.css.map */
