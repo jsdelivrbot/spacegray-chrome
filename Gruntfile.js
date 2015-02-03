@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
   var
+    chromeExtensionTabId,
     LIVERELOAD_PORT = 35729,
     lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT }),
     mountFolder = function( connect, dir ) {
@@ -10,6 +11,13 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
+    crx_auto_reload: {
+      options: {
+        extensionDir: 'dist'
+      },
+      default: {}
+    },
+
     sass: {
       dist: {
         files: {
@@ -44,8 +52,13 @@ module.exports = function(grunt) {
 
     watch: {
       sass: {
-        files: ['**/*.scss', '**/*.html'],
+        files: ['**/*.scss'],
         tasks: ['sass'],
+        options: { livereload: LIVERELOAD_PORT }
+      },
+      crx: {
+        files: ['dist'],
+        tasks: ['chrome_extension_reload'],
         options: { livereload: LIVERELOAD_PORT }
       }
     }

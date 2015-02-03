@@ -146,7 +146,6 @@ body /deep/ .value {
 body /deep/ .outline-disclosure li.selected .selection {
   display: block;
   background-color: #363c4a !important; }
-
 body /deep/ .outline-disclosure li.parent {
   margin-left: 0; }
   body /deep/ .outline-disclosure li.parent::before {
@@ -161,17 +160,18 @@ body /deep/ .outline-disclosure li.parent {
     transform: scale(1.4);
     position: relative !important;
     left: -5px !important; }
+body /deep/ .webkit-html-external-link, body /deep/ body /deep/ .webkit-html-resource-link {
+  color: #a4cc8d !important; }
 
 #elements-crumbs {
   flex: 0 0 27px !important;
   border-top: 1px solid #1c1f26 !important;
   background: #1c1f26 !important; }
 
-.crumbs .crumb.selected, .crumbs .crumb.selected:hover {
-  background-color: #70a8b8 !important; }
-
 body /deep/ .webkit-html-pseudo-element {
   color: #f4d988 !important; }
+body /deep/ .crumbs .crumb.selected, body /deep/ .crumbs .crumb.selected:hover {
+  background-color: #70a8b8 !important; }
 
 #drawer-tabbed-pane > .tabbed-pane-header {
   border-bottom: 2px solid #2b303b;
@@ -205,5 +205,9 @@ body /deep/ .webkit-html-pseudo-element {
 .console-formatted-number,
 .console-formatted-boolean {
   color: #70a8b8 !important; }
+
+select.status-bar-item {
+  color: #96b5b4 !important;
+  text-shadow: none !important; }
 
 /*# sourceMappingURL=Custom.css.map */
