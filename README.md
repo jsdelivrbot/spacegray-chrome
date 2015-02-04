@@ -11,4 +11,4 @@ You can either do pull requests or I'll add you as a contributor.
 Using grunt and bower, so make sure you've set that up. I don't check in the dependencies so you'll need to:
 `npm install && bower install`
 
-There's a plugin that will reload the devtools automatically, also, there's an HTML file that can show you a big chunk of the devtools. When you run `grunt` it will open. It's not exact and it's pretty close to styled already so I recommend actually opening devtools.
+There's a plugin that will reload the devtools automatically, however, you will still need to close and open devtools to see your changes. (If you know how to see your changes without doing that, tell me!!!) also, there's an HTML file that can show you a big chunk of the devtools. When you run `grunt` it will open. It's not exact and it's pretty close to styled already so I recommend actually opening devtools.
