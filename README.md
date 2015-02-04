@@ -2,7 +2,7 @@
 Spacegray for devtools
 
 ##Installation
-Installation is pretty straightforward if you've installed an unpacked extension before. Just make sure you install the `dist` folder instead of the folder itself (chrome doesn't like underscores in the filenames and I'm using sass partials
+Installation is pretty straightforward if you've installed an unpacked extension before. Just make sure you install the `dist` folder instead of the folder itself (chrome doesn't like underscores in the filenames and I'm using sass partials)
 
 ##development
 You can either do pull requests or I'll add you as a contributor.
